@@ -17,7 +17,6 @@ export const PostTodo = async (req, res) => {
             })
         }
         const { title, description } = data;
-        const params = req.params
 
         if (!title || !description) {
             return res.send({
@@ -29,7 +28,7 @@ export const PostTodo = async (req, res) => {
                 }
             })
         }
-        const result = await sql`INSERT INTO "todo"(title, description, user_id)  VALUES (${title}, ${description}, ${params.user_id})  RETURNING *;`;
+        const result = await sql`INSERT INTO "todo"(title, description, user_id)  VALUES (${title}, ${description}, ${req?.user.id})  RETURNING *;`;
         return res.send({
             success: true,
             message: "insert data successfully",
@@ -65,14 +64,14 @@ export const PutTodos = async (req, res) => {
 
 
         const { title, description } = data
-        const checkResult = await sql`SELECT title,description FROM "todo" WHERE id=${params.id} AND user_id = ${params.user_id}`;
+        const checkResult = await sql`SELECT title,description FROM "todo" WHERE id=${params.id} AND user_id = ${req?.user.id}`;
         if (!checkResult || checkResult.length == 0) {
             return res.send({
                 success: false,
                 message: "not data available"
             })
         }
-        const result = await sql`UPDATE "todo" SET title=${title} , description = ${description} WHERE id = ${params.id} AND user_id =${params.user_id} RETURNING *;`;
+        const result = await sql`UPDATE "todo" SET title=${title} , description = ${description} WHERE id = ${params.id} AND user_id =${req?.user.id} RETURNING *;`;
         return res.send({
             success: true,
             checkResult,
@@ -94,8 +93,7 @@ export const PutTodos = async (req, res) => {
 export const GetOneTodo = async (req, res) => {
     try {
         const params = req.params
-
-        const result = await sql`SELECT title , description FROM "todo" WHERE id = ${params.id} AND user_id=${params.user_id}`;
+        const result = await sql`SELECT title , description FROM "todo" WHERE id = ${params.id} AND user_id=${req?.user.id}`;
         if (!result) {
             return res.send({
                 success: false,
@@ -127,7 +125,7 @@ export const GetAllTodo = async (req, res) => {
     try {
         let page = 1;
         let limit = 10;
-        const params = req.params
+
         const query = req.query
 
         if (query.limit && !isNaN(query.limit) && Number(query.limit) > 0 && Number(query.limit) <= 100) {
@@ -147,7 +145,7 @@ export const GetAllTodo = async (req, res) => {
             count(id) 
         FROM "todo" 
         WHERE 
-            user_id=${params.user_id}
+            user_id=${req?.user.id}
         `;
 
         const result = await sql`
@@ -155,7 +153,7 @@ export const GetAllTodo = async (req, res) => {
             *
         FROM "todo" 
         WHERE 
-            user_id=${params.user_id}
+            user_id=${req?.user.id}
         LIMIT ${limit} OFFSET ${(page - 1) * limit}
         `;
 

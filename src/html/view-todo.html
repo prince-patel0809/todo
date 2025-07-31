@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>View Task - Taskify</title>
+    <script src="/static/tailwind.js"></script>
+</head>
+
+<body class="bg-gray-100 min-h-screen flex flex-col">
+
+    <!-- Navbar -->
+    <header class="bg-white shadow">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-indigo-600">Taskify</h1>
+            <nav class="space-x-6">
+                <a href="/" class=" text-gray-700 hover:text-indigo-600 ">Home</a>
+                <a href="/features" class="text-gray-700 hover:text-indigo-600">Features</a>
+                <a href="/todo" class="text-indigo-600 authVisible">Todo</a>
+                <a href="/login" class="text-gray-700 hover:text-indigo-600 authHidde">Login</a>
+                <a href="/register"
+                    class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 authHidde">Sign Up</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow container mx-auto px-6 py-10">
+        <div class="bg-white shadow-md rounded-lg p-6 max-w-2xl mx-auto">
+            <h2 class="text-2xl font-bold text-indigo-600 mb-4">Task Details</h2>
+
+            <div class="space-y-4">
+                <div>
+                    <p class="text-gray-500 text-sm">Title</p>
+                    <h3 class="text-lg font-semibold text-gray-800">Finish login system</h3>
+                </div>
+
+                <div>
+                    <p class="text-gray-500 text-sm">Description</p>
+                    <p class="text-gray-700">Build the login UI, integrate validation, and connect it to the API.</p>
+                </div>
+
+                <div class="flex gap-8">
+                    <div>
+                        <p class="text-gray-500 text-sm">Due Date</p>
+                        <p class="text-gray-700">2025-08-01</p>
+                    </div>
+                    <div>
+                        <p class="text-gray-500 text-sm">Status</p>
+                        <span
+                            class="inline-block bg-yellow-100 text-yellow-800 text-sm px-2 py-1 rounded-full">Pending</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-8">
+                <a href="/todo" class="text-indigo-600 hover:underline">← Back to Todo List</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white py-6 border-t">
+        <div class="container mx-auto px-6 text-center text-gray-600">
+            © 2025 Taskify. All rights reserved.
+        </div>
+    </footer>
+
+</body>
+
+</html>

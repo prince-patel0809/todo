@@ -36,10 +36,10 @@ app.get('/api/profile', AuthMiddleware, GetProfile)
 app.put('/api/profile', AuthMiddleware, UpdateProfile)
 
 // todos 
-app.post('/api/:user_id/todos', AuthMiddleware, PostTodo)
-app.put('/api/:user_id/todos/:id', AuthMiddleware, PutTodos)
-app.get('/api/:user_id/todos/:id', AuthMiddleware, GetOneTodo)
-app.get('/api/:user_id/todos', AuthMiddleware, GetAllTodo)
+app.post('/api/todos', AuthMiddleware, PostTodo)
+app.put('/api/todos/:id', AuthMiddleware, PutTodos)
+app.get('/api/todos/:id', AuthMiddleware, GetOneTodo)
+app.get('/api/todos', AuthMiddleware, GetAllTodo)
 
 
 
@@ -50,6 +50,11 @@ app.get('/api/:user_id/todos', AuthMiddleware, GetAllTodo)
 
 // web-routes (GET)
 app.get("/", (req, res) => res.sendFile(path.join(rootPath, "html", "index.html")))
+app.get("/features", (req, res) => res.sendFile(path.join(rootPath, "html", "features.html")))
+app.get("/login", (req, res) => res.sendFile(path.join(rootPath, "html", "login.html")))
+app.get("/todo", (req, res) => res.sendFile(path.join(rootPath, "html", "todo.html")))
+app.get("/add-todo", (req, res) => res.sendFile(path.join(rootPath, "html", "add-todo.html")))
+app.get("/view-todo/:id", (req, res) => res.sendFile(path.join(rootPath, "html", "view-todo.html")))
 
 
 

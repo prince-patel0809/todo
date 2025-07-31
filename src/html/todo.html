@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Taskify - Your Smart To-Do App</title>
+    <script src="/static/tailwind.js"></script>
+</head>
+
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- Navbar -->
+    <header class="bg-white shadow">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-indigo-600">Taskify</h1>
+            <nav class="space-x-6">
+                <a href="/" class="text-gray-700 hover:text-indigo-600">Home</a>
+                <a href="/features" class="text-gray-700 hover:text-indigo-600">Features</a>
+                <a href="/todo" class="text-indigo-600 authVisible">Todo</a>
+                <a href="/login" class="text-gray-700 hover:text-indigo-600 authHidde">Login</a>
+                <a href="/register"
+                    class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 authHidde">Sign Up</a>
+            </nav>
+        </div>
+    </header>
+    <!-- Todo Table -->
+    <main class="container mx-auto px-6 py-10">
+        <div class="mb-6 flex justify-between items-center">
+            <h2 class="text-3xl font-bold mb-6">My To-Do List</h2>
+            <a href="/add-todo" class="p-2 rounded-md bg-blue-600 text-white border-2 px-3">CREATE +</a>
+        </div>
+
+        <div class="overflow-x-auto">
+            <table class="min-w-full bg-white border border-gray-200 shadow-sm rounded-lg">
+                <thead class="bg-indigo-100 text-gray-700">
+                    <tr>
+                        <th class="px-6 py-3 text-left">#</th>
+                        <th class="px-6 py-3 text-left">Task</th>
+                        <th class="px-6 py-3 text-left">Descrption</th>
+                        <th class="px-6 py-3 text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="text-gray-700" id="tableContainer">
+                    <!-- <tr class="border-t">
+                        <td class="px-6 py-4">1</td>
+                        <td class="px-6 py-4">Finish login system</td>
+                        <td class="px-6 py-4">2025-08-01</td>
+                        <td class="px-6 py-4">Pending</td>
+                        <td class="px-6 py-4 text-center space-x-2">
+                            <a href="/todo/view/1" class="text-blue-600 hover:underline">View</a>
+                            <a href="/todo/edit/1" class="text-yellow-500 hover:underline">Edit</a>
+                            <a href="/todo/delete/1" class="text-red-600 hover:underline">Delete</a>
+                        </td>
+                    </tr> -->
+                    <!-- Add more rows dynamically from backend -->
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+
+    <!-- Footer -->
+    <footer class="bg-white py-6 mt-10 border-t">
+        <div class="container mx-auto px-6 text-center text-gray-600">
+            © 2025 Taskify. All rights reserved.
+        </div>
+    </footer>
+
+    <script src="/static/utils.js"></script>
+    <script>
+        const tableContainer = document.getElementById("tableContainer")
+        const fetchData = async () => {
+            try {
+                const response = await fetch('/api/todos', {
+                    headers: {
+                        authorization: "Bearer " + getCookie('token')
+                    }
+                });
+                if (!response.ok) {
+                    throw new Error("Something went wrong")
+                }
+                const data = await response?.json()
+                if (data.success == false) {
+                    throw new Error("Something went wrong")
+                }
+                console.log(data);
+
+                let html = ''
+                data.result.todos.forEach(e => {
+                    html += `<tr class="border-t">
+                        <td class="px-6 py-4">${e.id}</td>
+                        <td class="px-6 py-4">${e.title}</td>
+                        <td class="px-6 py-4">${e.description}</td>
+                        <td class="px-6 py-4 text-center space-x-2">
+                            <a href="/view-todo/${e.id}" class="text-blue-600 hover:underline">View</a>
+                            <a href="/todo/edit/1" class="text-yellow-500 hover:underline">Edit</a>
+                            <a href="/todo/delete/1" class="text-red-600 hover:underline">Delete</a>
+                        </td>
+                    </tr>`
+                });
+                tableContainer.innerHTML = html
+            } catch (error) {
+                console.log(error);
+                alert(error?.message || "Error")
+            }
+        }
+        fetchData()
+    </script>
+</body>
+
+</html>

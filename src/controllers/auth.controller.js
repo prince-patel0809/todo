@@ -57,7 +57,7 @@ export const Login = async (req, res) => {
             message: "Login successfull",
             result: {
                 token: token,
-                user: data
+                user: { ...result[0], password: undefined } // exclude password from user data
             }
         })
     } catch (error) {
