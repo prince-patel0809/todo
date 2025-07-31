@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <!-- Refresh the page every 1 second -->
+    <meta http-equiv="refresh" content="1">
+    <title>Meta Tag Clock</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 20%;
+            font-size: 3em;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        Current Time:
+        <script>
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            document.write(`${hours}: ${minutes}: ${seconds}`);
+        </script>
+    </div>
+</body>
+
+</html>
