@@ -80,7 +80,6 @@
                 });
 
                 const data = await res.json();
-                console.log(data);
                 if (!res.ok) {
                     showMessage(data.error || 'Login failed. Please try again.', 'error');
                 } else {

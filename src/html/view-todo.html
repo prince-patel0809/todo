@@ -30,27 +30,15 @@
         <div class="bg-white shadow-md rounded-lg p-6 max-w-2xl mx-auto">
             <h2 class="text-2xl font-bold text-indigo-600 mb-4">Task Details</h2>
 
-            <div class="space-y-4">
-                <div>
-                    <p class="text-gray-500 text-sm">Title</p>
-                    <h3 class="text-lg font-semibold text-gray-800">Finish login system</h3>
-                </div>
+            <div class="space-y-4" id="mainContainer">
 
-                <div>
-                    <p class="text-gray-500 text-sm">Description</p>
-                    <p class="text-gray-700">Build the login UI, integrate validation, and connect it to the API.</p>
-                </div>
 
                 <div class="flex gap-8">
                     <div>
                         <p class="text-gray-500 text-sm">Due Date</p>
                         <p class="text-gray-700">2025-08-01</p>
                     </div>
-                    <div>
-                        <p class="text-gray-500 text-sm">Status</p>
-                        <span
-                            class="inline-block bg-yellow-100 text-yellow-800 text-sm px-2 py-1 rounded-full">Pending</span>
-                    </div>
+
                 </div>
             </div>
 
@@ -66,6 +54,51 @@
             © 2025 Taskify. All rights reserved.
         </div>
     </footer>
+
+
+    <script src="/static/utils.js"></script>
+
+    <script>
+        const mainContainer = document.getElementById("mainContainer");
+        const title = document.getElementById("title");
+        const description = document.getElementById("description");
+
+
+        const fetchdata = async () => {
+            const id = window.location.pathname.split('/').pop();
+            const res = await fetch(`http://127.0.0.1:3000/api/todos/${id}`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + getCookie('token'),
+                    "Content-Type": "application/json"
+                }
+            })
+            var date = new Date();
+            const data = await res.json();
+            let showContainer = ''
+            data.result.forEach(e => {
+                showContainer += `<div>
+                    <p class="text-gray-500 text-sm">Title</p>
+                    <h3 class="text-lg font-semibold text-gray-800" id="title">${e.title}</h3>
+                </div>
+
+                <div>
+                    <p class="text-gray-500 text-sm text-wrap">Description</p>
+                    <p class="text-gray-700 break-all" id="description">${e.description}</p>
+                </div>
+                <div class="flex gap-8">
+                    <div>
+                        <p class="text-gray-500 text-sm">Due Date</p>
+                        <p class="text-gray-700">${date.getDate()}/${date.getMonth()}/${date.getFullYear()}</p>
+                    </div>`
+            });
+            mainContainer.innerHTML = showContainer;
+        }
+
+
+
+        fetchdata();
+    </script>
 
 </body>
 

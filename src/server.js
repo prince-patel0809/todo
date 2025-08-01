@@ -6,7 +6,7 @@ import path from "path"
 import { fileURLToPath } from "url";
 import { Login, Register } from "./controllers/auth.controller.js"
 import { GetProfile, UpdateProfile } from "./controllers/profile.controller.js"
-import { GetOneTodo, PostTodo, PutTodos, GetAllTodo } from "./controllers/todo.controller.js"
+import { GetOneTodo, PostTodo, PutTodos, GetAllTodo, Deletetodo } from "./controllers/todo.controller.js"
 import { AuthMiddleware } from "./middleware/auth.middleware.js"
 // Recreate __dirname in ESM
 const __filename = fileURLToPath(import.meta.url);
@@ -40,6 +40,7 @@ app.post('/api/todos', AuthMiddleware, PostTodo)
 app.put('/api/todos/:id', AuthMiddleware, PutTodos)
 app.get('/api/todos/:id', AuthMiddleware, GetOneTodo)
 app.get('/api/todos', AuthMiddleware, GetAllTodo)
+app.delete('/api/todos/:id', Deletetodo)
 
 
 
@@ -55,6 +56,8 @@ app.get("/login", (req, res) => res.sendFile(path.join(rootPath, "html", "login.
 app.get("/todo", (req, res) => res.sendFile(path.join(rootPath, "html", "todo.html")))
 app.get("/add-todo", (req, res) => res.sendFile(path.join(rootPath, "html", "add-todo.html")))
 app.get("/view-todo/:id", (req, res) => res.sendFile(path.join(rootPath, "html", "view-todo.html")))
+app.get("/register", (req, res) => res.sendFile(path.join(rootPath, "html", "register.html")))
+
 
 
 

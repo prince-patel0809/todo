@@ -188,3 +188,32 @@ export const GetAllTodo = async (req, res) => {
         })
     }
 }
+
+// delete todo
+export const Deletetodo = async (req, res) => {
+    try {
+        const data = req.body
+        if (!data) {
+            return res.send({
+                success: false,
+                message: "data no availble",
+                error
+            })
+        }
+        const params = req.params
+        const result = await sql`DELETE FROM "todo" WHEREid = ${params.id} AND user_id =${req?.user_id} `;
+
+        return res.send({
+            success: true,
+            message: "deleted successfully",
+            result
+        })
+    } catch (error) {
+        return res.send({
+            success: false,
+            message: "internal server error",
+            error
+        })
+
+    }
+}

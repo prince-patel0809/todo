@@ -86,12 +86,14 @@
                 }
                 console.log(data);
 
+
+
                 let html = ''
                 data.result.todos.forEach(e => {
                     html += `<tr class="border-t">
                         <td class="px-6 py-4">${e.id}</td>
                         <td class="px-6 py-4">${e.title}</td>
-                        <td class="px-6 py-4">${e.description}</td>
+                        <td class="px-6 py-4 text-gray-700 break-all">${e.description}</td>
                         <td class="px-6 py-4 text-center space-x-2">
                             <a href="/view-todo/${e.id}" class="text-blue-600 hover:underline">View</a>
                             <a href="/todo/edit/1" class="text-yellow-500 hover:underline">Edit</a>
@@ -106,6 +108,8 @@
             }
         }
         fetchData()
+
+
     </script>
 </body>
 

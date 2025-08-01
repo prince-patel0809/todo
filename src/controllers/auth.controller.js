@@ -32,7 +32,7 @@ export const Login = async (req, res) => {
         const users = result[0]
 
         //compare hashpassword to input password
-        let isAuth = bcrypt.compare(password, users.password);
+        let isAuth = await bcrypt.compare(password, users.password);
         if (isAuth == false) {
             return res.send({
                 success: false,
@@ -46,7 +46,7 @@ export const Login = async (req, res) => {
             data: {
                 id: users.id,
                 name: users.name,
-                email: users.email
+                email: users.email,
             }
         }
         const token = jwt.sign(payload, 'secret');
